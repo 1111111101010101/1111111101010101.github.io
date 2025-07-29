@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Long Link</title>
+    <style>
+        * {
+            color-scheme: light dark;
+            box-sizing: border-box;
+            font-family: system-ui;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        main {
+            width: 300px;
+
+        }
+
+        main>div {
+            margin: 12px 0;
+        }
+
+        .title {
+            font-size: 24px;
+            text-align: center;
+            margin: 0 0 30px;
+        }
+
+        .titleurl {
+            font-size: 13px;
+            color: gray;
+            margin-top: 4px;
+        }
+
+        label {
+            display: block;
+            margin: 4px 0;
+            font-size: 14px;
+        }
+
+        input {
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+            padding: 8px;
+            width: 100%;
+            height: 36px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input::placeholder {
+            color: lightgray;
+        }
+
+        input:focus {
+            outline: 2px solid gray;
+            outline-offset: -2px;
+        }
+
+        .divoutput {
+            display: flex;
+        }
+
+        #output {
+            width: calc(100% - 60px);
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-right: none;
+        }
+
+        #btncopy {
+            width: 60px;
+            height: 36px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-left: none;
+            border-top-right-radius: 6px;
+            border-bottom-right-radius: 6px;
+            cursor: pointer;
+        }
+
+        .foot {
+            text-align: center;
+            font-size: 13px;
+            margin: 30px 0 0;
+        }
+
+        .foot * {
+            color: gray;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            input::placeholder {
+                color: gray;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="title">
+            Binary Long Link
+            <div class="titleurl">1111111101010101.github.io</div>
+        </div>
+        <div>
+            <label for="input">Input URL:</label>
+            <input type="url" id="input" placeholder="https://example.com">
+        </div>
+        <div>
+            <label for="output">Output URL:</label>
+            <div class="divoutput">
+                <input type="url" id="output" readonly onfocus="this.select()">
+                <button type="button" id="btncopy">Copy</button>
+            </div>
+        </div>
+        <div class="foot">
+            <a href="https://github.com/1111111101010101/1111111101010101.github.io" target="_blank">Source Code</a>
+        </div>
+    </main>
+    <script>
+        btncopy.onclick = async () => {
+            try {
+                output.value && await navigator.clipboard.writeText(output.value)
+            } catch (e) {
+                console.error(e)
+                alert(e)
+            }
+        }
+        (input.oninput = () => {
+            const u = input.value.trim()
+            try {
+                output.value = 'https://1111111101010101.github.io/#' + Array.from(new TextEncoder().encode(new URL(u.includes(':') ? u : 'http://' + u)), v => v.toString(2).padStart(8, '0')).join("") +'#'
+            } catch (e) {
+                output.value = ''
+            }
+        })()
+    </script>
+</body>
+
+</html>
